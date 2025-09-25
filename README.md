@@ -2,8 +2,8 @@
 
 ## Developer Articles
 
-1. [Day 0: Node.js Basics](#day-0-nodejs-basics)
-2. [Day 1: Node.js Basics](#day-1-nodejs-basics)
+1. [Day 0: Node.js Getting Started with Node.js](#day-0-getting-started-with-nodejs)
+2. [Day 1: Node.js Writing and Running Code in Node.js](#day-1-writing-and-running-code-in-nodejs)
 3. [Day 2: Node.js Modules](#day-2-nodejs-modules)
 <!-- 4. [Day 3: Node.js Modules](#day-3-nodejs-modules)
 5. [Day 4: Node.js Basics](#day-4-nodejs-basics)
@@ -14,14 +14,144 @@
 10. [Day 9: Node.js Basics](#day-9-nodejs-basics) -->
 
 ##
+<!-- =======================================Day 0========================= -->
+## Day 0: Getting Started with Node.js
+**What is Node.js?**
+* Node.js is not a programming language.
+* It's a JavaScript runtime built on Google Chrome's V8 engine.
+* It lets you run JavaScript outside the browser, mainly on the server.
 
-<!-- ## Day 0: Node.js Basics
-Content for Day 0...
+##### 👉 Simple analogy:
+* Browser = Kitchen where JS can only cook snacks (Frontend).
+* Node.js = Open kitchen + delivery service where JS can now cook full meals (backend)
 
-## Day 1: Node.js Basics
-Content for Day 1... -->
+**Why Node.js**
+* Fast: Non-blocking I/O., powered by V8.Fast: Non-blocking I/O., powered by V8.
+* Scalable: Handles thousands of requests with event-driven architecture.
+* Real-world users: Netflix, PayPal, Uber, LinkedIn
 
-# Day 2: Node.js Modules
+**Prerequisite**
+#
+* Basic JavaScript knowledge (variables, functions, async/await)
+* Understanding of basic command line
+* Curious to build the things. 🚀
+
+**Installing Node.js**
+
+1. Go to https://nodejs.org/en/download.
+2. Download the LTS (Long-Term Support) version.
+3. Install with default settings.
+* Verify installation:
+```base
+  node -v
+  npm -v
+```
+* node -v: shows Node version.
+* npm -v: shows package manager version
+
+**First Program**
+* Create a file called
+
+app.js:
+```javascript
+  console.log('Hello, World!');
+```
+Run it:
+```base
+  node app.js
+```
+Output:
+```base
+  Hello, World!
+```
+
+**Key Takeaways**
+#
+
+* Node.js allows JavaScript to run on the server.
+* It's fast, scalable, and widely used in production.
+* Installing Node.js gives you access to both node and npm.
+* You just ran your first Node.js program. 🎉
+
+<!-- =======================================Day 1========================= -->
+
+## Day 1: Writing and Running Code in Node.js
+
+**Hello World**
+* Explain again how to create a app.js file
+* Add more than one line:
+```javascript
+  console.log('Hello, World!');
+  console.log('This is my first Node.js program');
+```
+
+* Show how Node executes code. top-to-bottom.
+
+**Using Node REPL (Read-Eval-Print Loop)**
+
+* REPL is like a playground to quickly test JavaScript code without creating files.
+
+Open Terminal -> type:
+```terminal
+  node
+```
+Examples inside REPL:
+```terminal
+  console.log('Hello, World!');
+  1 + 1
+  10 * 2
+```
+* Exit REPL by typing `.exit` or pressing `Ctrl + C` twice.
+
+**Difference: Running in REPL vs Running from file**
+* REPL -> quick testing, one-liners.
+* File -> writing full programs, reusable.
+
+Example:
+
+* In REPL, Let x = 10; disappears when you exit.
+* In a file, variables/functions stay saved.
+
+**Node.js as Calculator (Mini Task)**
+
+```javascript
+//Encourage reader to try:
+console.log(2 + 4);
+console.log(29 - 2);
+console.log(4 * 7);
+console.log(20 / 4);
+```
+
+**Command-Line Arguments**
+
+How to pass values from terminal:
+greet.js:
+
+```javascript
+const args = process.argv.slice(2);
+console.log("Hello, " + args[0] + "!");
+```
+
+Run:
+```base
+node greet.js Akash!
+```
+Output:
+```base
+Hello, Akash!
+```
+
+**Key Takeaways**
+
+* Node.js can be used in two ways: REPL and script file.
+* REPL = quick testing, Files = reusable programs.
+* You can pass arguments from terminal to scripts.
+* You're now ready to explore Node.js modules next. 🚀
+
+
+<!-- =======================================Day 2========================= -->
+
+## Day 2: Node.js Modules
 
 **1. What is a module?**
 
