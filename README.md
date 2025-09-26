@@ -5,8 +5,8 @@
 1. [Day 0: Node.js Getting Started with Node.js](#day-0-getting-started-with-nodejs)
 2. [Day 1: Node.js Writing and Running Code in Node.js](#day-1-writing-and-running-code-in-nodejs)
 3. [Day 2: Node.js Modules](#day-2-nodejs-modules)
-<!-- 4. [Day 3: Node.js Modules](#day-3-nodejs-modules)
-5. [Day 4: Node.js Basics](#day-4-nodejs-basics)
+4. [Day 3: Node.js File System (fs) Module in Node.js](#day-3-nodejs-file-system-fs-module-in-nodejs)
+<!-- 5. [Day 4: Node.js Basics](#day-4-nodejs-basics)
 6. [Day 5: Node.js Basics](#day-5-nodejs-basics)
 7. [Day 6: Node.js Basics](#day-6-nodejs-basics)
 8. [Day 7: Node.js Basics](#day-7-nodejs-basics)
@@ -258,10 +258,131 @@ console.log(chalk.blue("Hello in Blue!"));
 * Reusability & modularity keep projects clean and organized.
 
 
-<!-- ## Day 3: Node.js Basics
-Content for Day 3...
+## Day 3: Node.js File System (fs) Module in Node.js
 
-## Day 4: Node.js Basics
+1. **Introduction to the fs Module in Node.js**
+
+* fs stand for File System/
+* It allows Node.js to interact with files on your computer.
+* You can create, read, update, delete (CURD) files and folder
+
+👉 Think of it as giving JavaScript the power to manage your computer's files.
+
+2. **Importing fs**
+    ```javascript
+    const fs = require('fs');
+    ```
+3. **Creating a File**
+    ```javascript
+    fs.writeFileSync('example.txt', 'Hello, World!');
+    // This creates a file named 'example.txt' with the content 'Hello, World!'
+    ```
+4. **Reading a File**
+    ```javascript
+    const data = fs.readFileSync('example.txt', 'utf8');
+    console.log(data);
+    // This reads the content of 'example.txt' and logs it to the console
+    ```
+
+* Output
+
+    ```base
+      Hello, World!
+    ```
+5. **Updating(Append) a File**
+    ```javascript
+    fs.appendFileSync('example.txt', ' This is an appended text');
+    // This appends 'This is an appended text' to 'example.txt'
+    ```
+6. **Deleting a File**
+    ```javascript
+    fs.unlinkSync('example.txt');
+    // This deletes the file 'example.txt'
+    ```
+7. **Rename File**
+    ```javascript
+    fs.renameSync('example.txt', 'newExample.txt');
+    // This renames 'example.txt' to 'newExample.txt'
+    ```
+8. **Creating a Folder**
+    ```javascript
+    fs.mkdirSync('myFolder');
+    // This creates a folder named 'myFolder'
+    ```
+
+9. **Asynchronous vs Synchronous**
+
+  - **Synchronous Operations**: These operations block the execution of the program until the operation is completed. They are straightforward but can make the application less responsive if used extensively, especially in a server environment where multiple requests need to be handled concurrently.
+  - **Asynchronous Operations**: These operations do not block the execution of the program. They use callbacks, promises, or async/await to handle the result once the operation is completed. This makes the application more responsive and efficient, especially in a server environment where multiple requests need to be handled concurrently.
+
+  - Example of Asynchronous File Reading:
+
+    ```javascript
+    fs.readFile('example.txt', 'utf8', (err, data) => {
+      if (err) {
+        console.error('Error reading file:', err);
+      } else {
+        console.log('File content:', data);
+      }
+    });
+
+    fs.writeFile('example.txt', 'Hello, World!', (err) => {
+      if (err) {
+        console.error('Error writing to file:', err);
+      } else {
+        console.log('File written successfully');
+      }
+    });
+    ```
+
+  - Example of Synchronous File Reading and Writing:
+    ```javascript
+      fs.readFileSync('example.txt', 'utf8', (err, data) => {
+        if (err) {
+          console.error('Error reading file:', err);
+        } else {
+          console.log('File content:', data);
+        }
+      });
+
+
+      fs.writeFileSync('example.txt', 'Hello, World!', (err) => {
+        if (err) {
+          console.error('Error writing to file:', err);
+        } else {
+          console.log('File written successfully');
+        }
+      });
+    ```
+
+👉 **Difference**
+* writeFileSync - blocks the program until done
+* writeFile - runs in background, doesn't block other code
+
+👉. **Key Takeaways**
+#
+* fs module lets you create, read, update, delete files.
+* Sync method are easy to use but block execution
+* Async method are better for scalable applications.
+* Node.js encourages asynchronous programming
+
+👉 Suggested **Day 4:** "Events & EventEmitter in Node.js" (Supper important for understand how Node works under the hood).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ## Day 4: Node.js Basics
 Content for Day 4...
 
 ## Day 5: Node.js Basics
@@ -279,3 +400,7 @@ Content for Day 8...
 ## Day 9: Node.js Basics
 Content for Day 9...
  -->
+
+
+
+
