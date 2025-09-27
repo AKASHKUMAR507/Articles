@@ -6,12 +6,12 @@
 2. [Day 1: Node.js Writing and Running Code in Node.js](#day-1-writing-and-running-code-in-nodejs)
 3. [Day 2: Node.js Modules](#day-2-nodejs-modules)
 4. [Day 3: Node.js File System (fs) Module in Node.js](#day-3-nodejs-file-system-fs-module-in-nodejs)
-<!-- 5. [Day 4: Node.js Basics](#day-4-nodejs-basics)
-6. [Day 5: Node.js Basics](#day-5-nodejs-basics)
-7. [Day 6: Node.js Basics](#day-6-nodejs-basics)
-8. [Day 7: Node.js Basics](#day-7-nodejs-basics)
-9. [Day 8: Node.js Basics](#day-8-nodejs-basics)
-10. [Day 9: Node.js Basics](#day-9-nodejs-basics) -->
+5. [Day 4: Events & EventEmitter in Node.js](#day-4-events-and-eventemitter-in-nodejs)
+6. [Day 5: Building an HTTP Server in Node.js](#day-5-building-an-http-server-in-nodejs)
+<!-- 7. [Day 6: Node.js Basics](#day-6-nodejs-basics) -->
+<!-- 8. [Day 7: Node.js Basics](#day-7-nodejs-basics) -->
+<!-- 9. [Day 8: Node.js Basics](#day-8-nodejs-basics) -->
+<!-- 10. [Day 9: Node.js Basics](#day-9-nodejs-basics) -->
 
 ##
 <!-- =======================================Day 0========================= -->
@@ -369,24 +369,170 @@ console.log(chalk.blue("Hello in Blue!"));
 👉 Suggested **Day 4:** "Events & EventEmitter in Node.js" (Supper important for understand how Node works under the hood).
 
 
+<!-- ====================================================== -->
+## Day 4: Events And EventEmitter in Node.js
+
+1. **What are Event**
+    > An event is an action/occurrence in a program (e.g., user click an button, a file is read, a server receives a request)
+
+    > Node.js uses a **event-driven** architecture, meaning it waits for events and reacts when they happen
+
+👉 Analogy: Think of a radio. It emits signals (events), and you tune in (listen) to act when they happen.
+
+2. **EventEmitter Class**
+
+    > In Node.js, events are handled using the event module.
+    > It provides the EventEmitter class to create, file and listen to events.
+
+    Import: 
+    ```javascript
+      const  EventEmitter = require('event');
+
+      const eventEmitter = new EventEmitter();
+    ```  
+
+3. **Basic Example: Emit & Listen**
+    ```javascript
+      // Create an event listener
+
+      eventEmitter.on('greet', () => {
+        console.log('Hello from EventEmitter!');
+      })
+
+      //Emit the event
+      eventEmitter.emit('greet');
+
+
+      // Output:
+      Hello from EventEmitter!
+    ```
+ 
+4. **Passing Data with Events**
+    ```javascript
+      eventEmitter.on('logout', (message) => {
+        console.log(message)
+      });
+
+      eventEmitter.emit('logout', 'You are logout.')
+
+      // Output:
+      You are logout.
+    ```
+
+5. **Multiple Listeners**
+    ```javascript
+      eventEmitter.on('welcome', () => {
+        console.log('Welcome listeners 1')
+      })
+
+       eventEmitter.on('welcome', () => {
+        console.log('Welcome listeners 2')
+      })
+
+      eventEmitter.emit('welcome');
+
+      //Output:
+      Welcome listeners 1
+      Welcome listeners 2
+    ```
+
+6. **Real-World Example: File Event**
+
+    ```javascript
+      const fs = require('fs');
+
+      eventEmitter.on('fileCreated', (fileName) => {
+        console.log(`A new file was created: ${fileName}`)
+      })
+
+      
+      fs.writeFileSync('day4.txt', 'EventEmitter example');
+      eventEmitter.emit('fileCreated', 'day4.txt');
+    ```
+
+7. **Imported Methods**
+
+    * `.on(event, listeners)` -> add a listeners.
+    * `.emit(event, data)` -> Trigger the event.
+    * `.once(event, listeners)` -> listen only once.
+    * `.removeListener(event, listeners)` -> Remove specific listeners.
+    * `.removeAllListener(event)` -> Remove all Listeners. 
+
+8. **Key Takeaways**
+
+    * Node.js is event-driven at its code.
+    * EventEmitter lets you emit events and listen to them.
+    * Events make apps emit asynchronous, scalable, and reactive.
+    * Many Node.js core modules (like http, fs, net) are built on EventEmitter.
+
+👉 Suggested Day 5: "Building an HTTP Server in Node.js" (using http module + connecting with EventEmitter).
+
+
+
+## Day 5: Building an HTTP Server in Node.js
+
+1. **What is an HTTP Server**
+
+    * HTTP = HyperText Transfer Protocol, the foundation of the web.
+    * A server is a program that listens to client requests (like browser requests) and sends back responses (like HTML, JSON, or files).
+    * In Node.js the http module is used to create server.
+
+👉 Analogy: Think of a restaurant
+
+* Client = Customer placing order.
+* Server = Waiter taking order & bringing food.
+* Response = food delivered.
+
+2. **Importing the http Module**
+
+    ```javascript
+      const http = require('http');
+    ```
+
+3. **Creating a Simple Server**
+
+    ```javascript
+      const http = require('http');
+
+      const server = http.createServer((req, res) => {
+        res.writeHead(200, {'Content-Type': 'text/plain'});
+
+        res.end(`
+          <h1>Welcome to Node.js Server</h1>
+          <p>This is served with html response.</p>
+        `);
+      });
+    ```
+
+
+4. **Sending JSON Response**
+
+    ```javascript
+      const http = require('http');
+
+      const server = http.createServer((req, res) => {
+        res.writeHead(200, {'Content-Type': 'application/json'});
+
+        res.end(JSON.stringify({
+          message: "Hello",
+          day: 5
+        }));
+      });
+    ```
+
+5. **Key Takeaways**
+
+    * The `http` module allows Node.js to create servers.
+    * `req` = Request Object (contains URL, headers, etc.).
+    * `res` = Response object (used to send data back).
+    * You can send `text`, `HTML`, or `JSON` responses.
+    * Routing helps send different responses for difference URLs
+
+👉 Suggested: **Day 6**: "Serving Static Files with Node.js (HTML, CSS, JS, using fs + http)."
 
 
 
 
-
-
-
-
-
-
-
-
-
-<!-- ## Day 4: Node.js Basics
-Content for Day 4...
-
-## Day 5: Node.js Basics
-Content for Day 5... -->
 
 <!-- ## Day 6: Node.js Basics
 Content for Day 6...
