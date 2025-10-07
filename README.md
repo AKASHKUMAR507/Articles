@@ -8,7 +8,7 @@
 4. [Day 3: Node.js File System (fs) Module in Node.js](#day-3-nodejs-file-system-fs-module-in-nodejs)
 5. [Day 4: Events & EventEmitter in Node.js](#day-4-events-and-eventemitter-in-nodejs)
 6. [Day 5: Building an HTTP Server in Node.js](#day-5-building-an-http-server-in-nodejs)
-<!-- 7. [Day 6: Node.js Basics](#day-6-nodejs-basics) -->
+7. [Day 6: Serving Static Files in Node.js](#day-6-serving-static-files-in-nodejs)
 <!-- 8. [Day 7: Node.js Basics](#day-7-nodejs-basics) -->
 <!-- 9. [Day 8: Node.js Basics](#day-8-nodejs-basics) -->
 <!-- 10. [Day 9: Node.js Basics](#day-9-nodejs-basics) -->
@@ -530,6 +530,135 @@ console.log(chalk.blue("Hello in Blue!"));
 
 👉 Suggested: **Day 6**: "Serving Static Files with Node.js (HTML, CSS, JS, using fs + http)."
 
+
+
+## Day 6: Serving Static Files in Node.js
+1. **What Are Static Files?**
+
+    * Static files are that don't change dynamically - e.g., HTML, CSS, JavaScript, images.
+    * When you visit a website, your browser requests these files from the server.
+    * Node.js can serve them using the fs + http modules.
+
+    Example: 
+    
+      When you open http://3000/home.html, Node reads that file and sends it to your browser
+
+2. **Setup Folder Structure**
+```base
+  project/
+    ├── server.js
+    └── public/
+          ├── index.html
+          ├── about.html
+          ├── style.css
+```
+
+3. **Sample HTML File**
+
+public/index.html
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Home Page</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <h1>Welcome to My Node.js Static Server</h1>
+    <p>This is Day 6 — serving static files.</p>
+  </body>
+</html>
+```
+
+public/style.css
+
+```css
+body {
+  font-family: Arial, sans-serif;
+  background: #f0f0f0;
+  color: #333;
+  text-align: center;
+  padding-top: 40px;
+}
+```
+
+4. **Create the Server(server.js)**
+
+```javascript
+  const http = require('http');
+const fs = require('fs');
+const path = require('path');
+
+const server = http.createServer((req, res) => {
+  // Build file path
+  let filePath = path.join(__dirname, 'public', req.url === '/' ? 'index.html' : req.url);
+
+  // Get file extension
+  let ext = path.extname(filePath);
+
+  // Default Content Type
+  let contentType = 'text/html';
+
+  // Set content type based on file extension
+  switch (ext) {
+    case '.js':
+      contentType = 'text/javascript';
+      break;
+    case '.css':
+      contentType = 'text/css';
+      break;
+    case '.json':
+      contentType = 'application/json';
+      break;
+    case '.png':
+      contentType = 'image/png';
+      break;
+    case '.jpg':
+      contentType = 'image/jpg';
+      break;
+  }
+
+  // Read and serve the file
+  fs.readFile(filePath, (err, content) => {
+    if (err) {
+      if (err.code === 'ENOENT') {
+        res.writeHead(404, { 'Content-Type': 'text/html' });
+        res.end('<h1>404: File Not Found</h1>');
+      } else {
+        res.writeHead(500);
+        res.end('Server Error');
+      }
+    } else {
+      res.writeHead(200, { 'Content-Type': contentType });
+      res.end(content);
+    }
+  });
+});
+
+server.listen(3000, () => console.log('Server running on http://localhost:3000'));
+```
+
+5. **Test it**
+
+Run
+```base
+  node server.js
+```
+
+Open in Browser
+  
+  * http://localhost:3000/ -> load index.html
+  * http://localhost/about.html -> load about.html
+  * http://localhost/style.css -> load style.css
+
+6. **Key Takeaways**
+
+  * You can serve HTML, CSS, JS, and image files using Node.js
+  * The fs module reads the file, and the http module sends it.
+  * The path module helps manage file paths easily
+  * You've just built a mini web server that serve a frontend!
+
+👉 Suggested Day 7: "Understanding the Node.js Request & Response Objects (Deep Dive into req.url, req.method, headers, and res.writeHead)."
 
 
 
